@@ -1,0 +1,215 @@
+
+
+#EXERCISES RESULTS (code bottom of file, line 152)
+#1) 681
+#2) GC content = 61,67%
+#3) 
+    a. GCcontent = 65,46%
+    b. non reference genome = 5330
+       reference genome = 6713
+    c. number of common ORF = 5168
+
+######## From here log file of class exercises ########
+#First we download the reference yeast genome
+
+$ ls -l S288C_reference_genome_R64-2-1_20150113/
+    total 67776
+    -rw-r--r-- 1 student12 students  3609953 Jan 13  2015 NotFeature_R64-2-1_20150113.fasta
+    -rw-r--r-- 1 student12 students 12361395 Jan 13  2015 S288C_reference_sequence_R64-2-1_20150113.fsa
+    -rw-r--r-- 1 student12 students 17633737 Jan 13  2015 gene_association_R64-2-1_20150113.sgd
+    -rw-r--r-- 1 student12 students 11491336 Jan 13  2015 orf_coding_all_R64-2-1_20150113.fasta
+    -rw-r--r-- 1 student12 students  5328465 Jan 13  2015 orf_trans_all_R64-2-1_20150113.fasta
+    -rw-r--r-- 1 student12 students   814529 Jan 13  2015 other_features_genomic_R64-2-1_20150113.fasta
+    -rw-r--r-- 1 student12 students   182615 Jan 13  2015 rna_coding_R64-2-1_20150113.fasta
+    -rw-r--r-- 1 student12 students 17967332 Jan 13  2015 saccharomyces_cerevisiae_R64-2-1_20150113.gff
+
+$ mv S288C_reference_genome_R64-2-1_20150113/ data
+$ ls
+    S288C_reference_genome_Current_Release.tgz  data
+
+$ wc -l ~/data/orf_coding_all_R64-2-1_20150113.fasta 
+    output 161265  
+$ grep -c ">" orf_coding_all_R64-2-1_20150113.fasta
+    output  6713
+$ grep -c ">" orf_coding_all_R64-2-1_20150113.fasta > ~/results_2020_01_28/counts.txt
+$ grep -c "tRNA" rna_coding_R64-2-1_20150113.fasta 
+    output  304
+$ grep -c "tRNA" rna_coding_R64-2-1_20150113.fasta >> ~/results_2020_01_28/counts.txt 
+$ cat ~/results_2020_01_28/counts.txt
+    output  6713
+            304
+
+$ cp ~/results_2020_01_28/counts.txt ~/results_2020_01_28/counts.txt.orig
+
+#exercise 3
+$ paste ex1.acc ex1.dat 
+    output  puts the content of both files together
+
+#exercise 4
+$ grep "4891." 2759_members.tsv | cut -f 2 | sort > groups_scerevisiae.txt
+    output create new file with the name of proteins presented in the selected organisms
+$ grep "9606." 2759_members.tsv | cut -f 2 | sort > groups_hsapiens.txt 
+ 
+$ comm -12 groups_hsapiens.txt groups_scerevisiae.txt | wc -l
+    output  838
+
+#exercise 5
+$ sed '/^>/!y/ACGT/UGCA/' orf_coding_all_R64-2-1_20150113.fasta > orf_coding_all_R64-2-1_20150113_RNA.fasta
+
+#git exercises
+$ mkdir apartment
+$ cd apartment/
+$ $ git init
+    output Initialized empty Git repository in /home/student12/apartment/.git/
+$ nano livingroom.txt
+$ git status
+    output On branch master
+           No commits yet
+           Untracked files:
+            (use "git add <file>..." to include in what will be committed)
+                livingroom.txt
+           nothing added to commit but untracked files present (use "git add" to track)
+$ git add livingroom.txt 
+$ git status
+    output On branch master
+           No commits yet
+           Changes to be committed:
+            (use "git rm --cached <file>..." to unstage)
+                new file:   livingroom.txt
+$ git commit -m "Start planning living room" #records the addition of the file to the repository. Current state of the project is saved
+    output [master (root-commit) 13fa8c6] Start planning living room
+                Committer: Student <student12@ip-172-31-23-20.eu-west-3.compute.internal>
+           Your name and email address were configured automatically based
+           on your username and hostname. Please check that they are accurate.
+           You can suppress this message by setting them explicitly. Run the
+           following command and follow the instructions in your editor to edit
+           your configuration file:
+                git config --global --edit
+           After doing this, you may fix the identity used for this commit with:
+                git commit --amend --reset-author
+           1 file changed, 2 insertions(+)
+           create mode 100644 livingroom.txt
+$ git log
+    output commit 13fa8c611454f05b14d70f213671ab7dc3fb1ad3 (HEAD -> master)
+                Author: Student <student12@ip-172-31-23-20.eu-west-3.compute.internal>
+                Date:   Sat Feb 1 12:56:42 2020 +0000
+                    Start planning living room
+$ nano livingroom.txt 
+$ git status
+    output On branch master
+            Changes not staged for commit:
+            (use "git add <file>..." to update what will be committed)
+            (use "git checkout -- <file>..." to discard changes in working directory)
+$ git diff
+    output diff --git a/livingroom.txt b/livingroom.txt
+           index f48b68f..8e3316f 100644
+           --- a/livingroom.txt
+           +++ b/livingroom.txt
+           @@ -1,2 +1,4 @@
+            - paint
+            - move furniture 
+           +- decorate
+           +- change lights
+$ git add livingroom.txt 
+$ git commit -m "Add items as per discussion"
+    output [master 1388e8b] Add items as per discussion
+            Committer: Student <student12@ip-172-31-23-20.eu-west-3.compute.internal>
+            Your name and email address were configured automatically based
+            on your username and hostname. Please check that they are accurate.
+            You can suppress this message by setting them explicitly. Run the
+            following command and follow the instructions in your editor to edit
+            your configuration file:
+                git config --global --edit
+            After doing this, you may fix the identity used for this commit with:
+                git commit --amend --reset-author
+                1 file changed, 2 insertions(+)
+$ git log
+    output  commit 1388e8b67c45028c8d2c56fd936c648af1cc655f (HEAD -> master)
+            Author: Student <student12@ip-172-31-23-20.eu-west-3.compute.internal>
+            Date:   Sun Feb 2 23:37:28 2020 +0000
+            Add items as per discussion
+            commit 13fa8c611454f05b14d70f213671ab7dc3fb1ad3
+            Author: Student <student12@ip-172-31-23-20.eu-west-3.compute.internal>
+            Date:   Sat Feb 1 12:56:42 2020 +0000
+            Start planning living room
+$ git diff 13fa8c  #using ID to track differences
+    outputa diff --git a/livingroom.txt b/livingroom.txt
+            index f48b68f..8e3316f 100644
+            --- a/livingroom.txt
+            +++ b/livingroom.txt
+            @@ -1,2 +1,4 @@
+            - paint
+            - move furniture 
+            +- decorate
+            +- change lights
+
+
+
+
+
+
+
+                    ######### HOMEWORK       HOMEWORK       HOMEWORK ########
+
+#exercise 1 number of genes in chromosome II 
+$ grep "chrII" saccharomyces_cerevisiae_R64-2-1_20150113.gff | cut -f 3 | grep -c "gene" 
+    output 681
+
+#The first part of the command gets all the elements present in chromosome II. I piped this to cut and asked it to only look at the 3rd column 
+#because that is where the information about being a gene etc is. Lastly I piped this to another grep command that would also count the amount 
+#of lines in which gene would appear. 
+
+#exercise 2 GC content: 
+GC-content is (G+C)/(A+T+G+C)
+$ G=$(grep -o "G" S288C_reference_sequence_R64-2-1_20150113.fsa | wc -l) #count of number of "G" in the file. we store it in a variable. same for C, T, A
+$ echo $G #print variable
+    output 2317100
+$ GC=  expr $G + $C #arithmetic sum of two different variables
+    output 4637710
+$ sum= expr $GC + $A + $T #total number of bases
+    output 7519429
+
+    GC content = 61,67%
+
+#exercise 3 
+a.
+$ wget https://downloads.yeastgenome.org/sequence/strains/Y55/Y55_SGD_2015_JRIF00000000/Y55_JRIF00000000_SGD_cds.fsa.gz #to get the required compressed documents
+$ gunzip Y55_JRIF00000000_SGD_cds.fsa.gz #to decompress the file
+    output Y55_JRIF00000000_SGD_cds.fsa #FASTA file
+
+$ sed '/^>/!y/gact/GACT/' Y55_JRIF00000000_SGD_cds.fsa > Y55_JRIF00000000_SGD_cds_cap-letters.fsa 
+$ G=$(grep -v '^>' Y55_JRIF00000000_SGD_cds_cap-letters.fsa  | grep -o "G" Y55_JRIF00000000_SGD_cds_cap-letters.fsa | wc -l) #count of number of "G" in the file. we store it in a variable. same for C, T, A
+$ echo $G #print variable
+    output  1661558
+$ A 
+    output  2656363
+$ T
+    output  2236126
+$ C
+    output  1540924
+$ GC = expr $G + $C 
+    output  3202482
+$ sum= expr $GC + $A + $T 
+    output  4892489
+
+GC_content = 65,46 
+
+b.
+$ grep -c ">" Y55_JRIF00000000_SGD_cds.fsa #get the number of ORFs. Since all entries represent an ORF, we can get the number by counting the amount 
+#of lines starting with ">" since the symbol marks the start of a FASTA sequence 
+    output  5330
+#Same for orf_coding_all_R64-2-1_20150113.fasta, all the entries in the file corresponding to 
+$ grep -c ">" orf_coding_all_R64-2-1_20150113.fasta 
+    output 6713
+
+c.
+#to retrieve common sequences (without ID)
+#remove suffix from non-reference strain (everything behing the underscore) and then get all headers without UNDEF. For the reference genome, get the field (with cut) that has the identifier.
+$ sed 's/_.*//' Y55_JRIF00000000_SGD_cds.fsa > Y55_JRIF00000000_SGD_cds_no_suffix.fsa
+#I used sed to remove everything behind the underscore (everything that is not the ORF identifier)
+
+comm -12 <(grep '^>' Y55_JRIF00000000_SGD_cds_no_suffix.fsa | grep -v '^UNDEF' | sort) <(grep '^>' orf_coding_all_R64-2-1_20150113.fasta | cut -d ',' -f 1 | sort | sed 's/ .*//'
+ ) | wc -l
+    output 5168
+#I put everything in one command to avoid intermediate files. The strategie is different for the non_reference genome, where I select all entries (headers) that are identified (i.e. no UNDEFINED), and sort the resulting list 
+#for the reference genome, I also get the headers, select the first field and only use the identifier right after the '>' character, therefore I delete everything that follows the first space
